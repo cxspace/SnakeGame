@@ -56,6 +56,7 @@ public class Snake implements Data{
     }
 
     public void moveHeadLeft(){
+
         if (currentFlag == RIGHTFLAG || currentFlag == LEFTFLAG)
         {
             return;
@@ -177,8 +178,8 @@ public class Snake implements Data{
         定义三个元素的x,y坐标数组，蛇头由三个顶点构成一个等要三角形
          */
 
-        int clientX[] = new int [3];
-        int clientY[] = new int [3];
+        int clientX[] = new int [4];
+        int clientY[] = new int [4];
 
          switch (currentFlag)
          {
@@ -194,19 +195,29 @@ public class Snake implements Data{
 
 
                  //上顶点
+
+                 /*
                  clientX[0] = x;
                  clientY[0] = y;
 
+
+
                  //右顶点
                  clientX[1] = x + LONG;
-                 clientY[1] = y + LONG / 2;
+                 clientY[1] = y ;
 
                  //下顶点
-                 clientX[2] = x;
+                 clientX[2] = x + LONG;
                  clientY[2] = y + LONG;
 
-                 break;
+                 clientX[3] = x;
+                 clientY[3] = y + LONG;
 
+             //    System.out.println(x+":"+y);
+
+
+                 break;
+              */
              case DOWNFLAG:
 
                  /*
@@ -216,22 +227,27 @@ public class Snake implements Data{
                            *   ( x + LONG / 2 , y + LONG)
                   */
 
+                 /*
                  clientX[0] = x;
                  clientX[0] = y;
 
-                 clientX[1] = x + LONG;
-                 clientY[1] = y;
+                 clientX[1] = x - LONG;
+                 clientY[1] = y ;
 
-                 clientX[2] = x + LONG / 2;
-                 clientY[2] = y + LONG;
+                 clientX[2] = x - LONG;
+                 clientY[2] = y - LONG;
 
+                 clientX[3] = x ;
+                 clientY[3] = y - LONG;
+             */
                  break;
                /*
                        同上，定位以左上角坐标为 X Y
                */
 
-             case LEFTFLAG:
 
+             case LEFTFLAG:
+          /*
                  clientX[0] = x;
                  clientY[0] = y + LONG / 2;
 
@@ -240,11 +256,11 @@ public class Snake implements Data{
 
                  clientX[2] = x + LONG;
                  clientY[2] = y + LONG;
-
+              */
              break;
 
              case UPFLAG:
-
+             /*
                  //只要找到三点的位置，在client数组中存储的顺序不是问题
                  clientX[0] = x + LONG / 2;
                  clientY[0] = y;
@@ -254,6 +270,7 @@ public class Snake implements Data{
 
                  clientX[2] = x;
                  clientY[2] = y + LONG;
+                 */
              break;
 
              default:
@@ -327,12 +344,173 @@ public class Snake implements Data{
         int tempX = point.x + 1;
         int tempY = point.y;
 
-        
+        //蛇头是否碰撞到蛇身体的标志
+        boolean flag = false;
+
+
+        //判断蛇头坐标是否碰到蛇的身体
+        for (int i = 1 ;  i < array.size() ; i++)
+        {
+            Point tempPoint = (Point)array.get(i);
+
+            if(tempX == tempPoint.x && tempY == tempPoint.y)
+            {
+                flag = true;
+                break;
+            }
+
+        }
+
+        //判断蛇头坐标tempX是否超出窗口坐标RIGHT，且蛇头是否触碰到蛇的身体
+
+        if (tempX <= RIGHT && !flag)
+        {
+            for (int i = array.size() - 1 ; i > 0 ; i --)
+            {
+                Point point1 = (Point)(array.get(i - 1));
+                Point point2 = (Point)(array.get(i));
+
+                point2.x = point1.x;
+                point2.y = point1.y;
+
+                //蛇头右移
+
+            }
+
+            point.x = tempX;
+        }
+        else {
+            lifeFlag = false; //否则，说明蛇已经死亡
+
+        }
+
 
     }
 
 
+    public void moveDown()
+    {
+        tair = (Point)array.get(array.size()-1);
 
+        Point point = (Point)array.get(0);
+        int tempX = point.x;
+        int tempY = point.y + 1;
 
+        boolean flag = false;
 
+        //同上逻辑
+        for (int i = 1 ; i < array.size(); i ++)
+        {
+            Point tempPoint = (Point)array.get(i);
+
+            if (tempX == tempPoint.x && tempY == tempPoint.y)
+            {
+                flag = true;
+                break;
+            }
+        }
+
+        if (tempY <= DOWN && !flag)
+        {
+            for (int i = array.size() - 1 ; i > 0 ; i --)
+            {
+                Point point1 = (Point)(array.get(i-1));
+                Point point2 = (Point)(array.get(i));
+
+                point2.x = point1.x;
+                point2.y = point1.y;
+
+            }
+
+            //蛇头坐标y值改变
+            point.y = tempY;
+        }
+        else {
+            lifeFlag = false;
+        }
+    }
+
+    public void moveLeft()
+    {
+        tair = (Point) array.get(array.size() - 1);
+        Point point = (Point)array.get(0);
+
+        int tempX = point.x - 1;
+        int tempY = point.y;
+
+        boolean flag = false;
+
+        for (int i = 1 ; i < array.size() ; i ++)
+        {
+            Point tempPoint = (Point)array.get(i);
+            if (tempX == tempPoint.x && tempY == tempPoint.y)
+            {
+                flag = true;
+                break;
+            }
+        }
+
+        if(tempX >= LEFT && !flag)
+        {
+
+            for (int i = array.size() - 1 ; i > 0 ; i--)
+            {
+                Point point1 = (Point) (array.get(i - 1));
+                Point point2 = (Point) (array.get(i));
+
+                point2.x = point1.x;
+                point2.y = point1.y;
+            }
+
+            point.x = tempX;
+
+        }else {
+            lifeFlag = false;
+        }
+    }
+
+    public void moveUp()
+    {
+        tair = (Point)array.get(array.size()-1);
+        Point point = (Point)array.get(0);
+
+        int tempX = point.x;
+        int tempY = point.y - 1;
+
+        boolean flag = false;
+
+        for (int i = 1 ; i < array.size() ; i++)
+        {
+            Point tempPoint = (Point)array.get(i);
+            if (tempX == tempPoint.x && tempY == tempPoint.y)
+            {
+                flag = true;
+                break;
+            }
+        }
+
+        if (tempY >= UP && !flag)
+        {
+            for (int i = array.size() - 1 ; i > 0 ; i--)
+            {
+                Point point1 = (Point)(array.get(i-1));
+                Point point2 = (Point)(array.get(i));
+
+                point2.x = point1.x;
+                point2.y = point1.y;
+
+            }
+
+            point.y = tempY;
+        }
+        else {
+            lifeFlag = false;
+        }
+    }
+
+    public void draw(Graphics2D g2)
+    {
+        drawHead(g2);
+        drawBody(g2);
+    }
 }

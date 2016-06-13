@@ -8,9 +8,9 @@ import java.awt.geom.Rectangle2D;
  */
 public class Food implements Data{
 
-    private  int x;
-    private  int y;
-    private boolean isLife;
+    public   int x;
+    public   int y;
+    public boolean isLife;
 
     //构造食物
     public Food()
