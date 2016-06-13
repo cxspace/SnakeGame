@@ -39,6 +39,7 @@ public class Food implements Data{
 
     }
 
+
     //构造食物在界面中的绝对位置
     public Point absolutePoint(int x , int y)
     {

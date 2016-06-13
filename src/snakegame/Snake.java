@@ -1,6 +1,7 @@
 package snakegame;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 /**
@@ -159,6 +160,7 @@ public class Snake implements Data{
     }
 
 
+
     private void drawHead(Graphics2D g2)
     {
         int x = 0;
@@ -166,7 +168,7 @@ public class Snake implements Data{
 
         Point point = (Point)array.get(0);
 
-        //获取绝对坐标
+        //获取蛇头绝对坐标
         point = clientPoint(point);
         x = point.x;
         y = point.y;
@@ -175,11 +177,159 @@ public class Snake implements Data{
         定义三个元素的x,y坐标数组，蛇头由三个顶点构成一个等要三角形
          */
 
-        
+        int clientX[] = new int [3];
+        int clientY[] = new int [3];
+
+         switch (currentFlag)
+         {
+             case RIGHTFLAG:
+
+                 /*
+                     *     ( x , y )
+                     * *
+                   *** * *      ( x + LONG , y + LONG / 2)
+                     * *
+                     *     ( x , y + LONG )
+                  */
+
+
+                 //上顶点
+                 clientX[0] = x;
+                 clientY[0] = y;
+
+                 //右顶点
+                 clientX[1] = x + LONG;
+                 clientY[1] = y + LONG / 2;
+
+                 //下顶点
+                 clientX[2] = x;
+                 clientY[2] = y + LONG;
+
+                 break;
+
+             case DOWNFLAG:
+
+                 /*
+                           *
+             ( x , y ) * * * * *  ( x + LONG , y)
+                         * * *
+                           *   ( x + LONG / 2 , y + LONG)
+                  */
+
+                 clientX[0] = x;
+                 clientX[0] = y;
+
+                 clientX[1] = x + LONG;
+                 clientY[1] = y;
+
+                 clientX[2] = x + LONG / 2;
+                 clientY[2] = y + LONG;
+
+                 break;
+               /*
+                       同上，定位以左上角坐标为 X Y
+               */
+
+             case LEFTFLAG:
+
+                 clientX[0] = x;
+                 clientY[0] = y + LONG / 2;
+
+                 clientX[1] = x + LONG;
+                 clientY[1] = y;
+
+                 clientX[2] = x + LONG;
+                 clientY[2] = y + LONG;
+
+             break;
+
+             case UPFLAG:
+
+                 //只要找到三点的位置，在client数组中存储的顺序不是问题
+                 clientX[0] = x + LONG / 2;
+                 clientY[0] = y;
+
+                 clientX[1] = x + LONG;
+                 clientY[1] = y + LONG;
+
+                 clientX[2] = x;
+                 clientY[2] = y + LONG;
+             break;
+
+             default:
+                 break;
+
+         }
+
+        //调用API画出蛇头
+        /*
+            Polygon 绘制多边形的类
+
+            够造方法中 第一个参数是存储各点 x 坐标的数组
+                      第二个参数是存储各点 y 坐标的数组
+                      第三个坐标是多边形顶点的个数
+
+         */
+
+        Polygon polygon = new Polygon(clientX , clientY , clientX.length);
+
+        g2.setColor(Color.RED);
+        g2.fill(polygon);  //填充蛇头
+        g2.setColor(Color.BLACK);
+        g2.draw(polygon);  //绘制边框
 
     }
 
 
+    private  void drawBody(Graphics2D g2)
+    {
+        for(int i = 1 ; i < array.size() ; i++)
+        {
+            //遍历蛇身坐标值
+            Point point = (Point)(array.get(i));
+
+            //获取绝对坐标值
+            point = clientPoint(point);
+
+            //画矩形的类
+            Rectangle2D.Double rect = new Rectangle2D.Double(point.x , point.y , LONG , LONG);
+
+            g2.setColor(Color.GREEN);
+            g2.fill(rect);
+
+            g2.setColor(Color.BLACK);
+            g2.draw(rect);
+
+        }
+    }
+
+    public boolean isLife()
+    {
+        return lifeFlag;
+    }
+
+     //增长蛇身
+    public void addNode()
+    {
+        array.add(new Point(tair.x , tair.y));
+    }
+
+    //蛇向右移动的逻辑
+    public void moveRight()
+    {
+        //拿到蛇尾
+        tair = (Point)array.get(array.size()-1);
+
+        //拿到蛇头
+        Point point = (Point)array.get(0);
+
+        //设置右移之后蛇头坐标值
+        int tempX = point.x + 1;
+        int tempY = point.y;
+
+        
+
+    }
 
 
 
