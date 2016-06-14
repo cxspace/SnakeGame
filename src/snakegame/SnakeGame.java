@@ -5,7 +5,7 @@ import javax.swing.*;
 /**
  * Created by cxspace on 16-6-13.
  */
-public class Test {
+public class SnakeGame {
    public static void main(String [] args)
    {
        System.out.print("ok");
