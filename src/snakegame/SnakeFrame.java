@@ -109,8 +109,8 @@ public class SnakeFrame extends JFrame{
         panel = new SnakePanel(this);
         contentPane.add(panel);
 
-        startMI.setEnabled(true);
-        pauseMI.setEnabled(false);
+        startMI.setEnabled(false);
+        pauseMI.setEnabled(true);
 
         runFlag = true;
 

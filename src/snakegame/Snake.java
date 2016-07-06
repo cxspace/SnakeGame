@@ -196,10 +196,9 @@ public class Snake implements Data{
 
                  //上顶点
 
-                 /*
+
                  clientX[0] = x;
                  clientY[0] = y;
-
 
 
                  //右顶点
@@ -217,7 +216,7 @@ public class Snake implements Data{
 
 
                  break;
-              */
+
              case DOWNFLAG:
 
                  /*
@@ -227,19 +226,21 @@ public class Snake implements Data{
                            *   ( x + LONG / 2 , y + LONG)
                   */
 
-                 /*
-                 clientX[0] = x;
-                 clientX[0] = y;
 
-                 clientX[1] = x - LONG;
+                 clientX[0] = x;
+                 clientY[0] = y;
+
+
+                 //右顶点
+                 clientX[1] = x + LONG;
                  clientY[1] = y ;
 
-                 clientX[2] = x - LONG;
-                 clientY[2] = y - LONG;
+                 //下顶点
+                 clientX[2] = x + LONG;
+                 clientY[2] = y + LONG;
 
-                 clientX[3] = x ;
-                 clientY[3] = y - LONG;
-             */
+                 clientX[3] = x;
+                 clientY[3] = y + LONG;
                  break;
                /*
                        同上，定位以左上角坐标为 X Y
@@ -247,30 +248,42 @@ public class Snake implements Data{
 
 
              case LEFTFLAG:
-          /*
+
                  clientX[0] = x;
-                 clientY[0] = y + LONG / 2;
+                 clientY[0] = y;
 
+
+                 //右顶点
                  clientX[1] = x + LONG;
-                 clientY[1] = y;
+                 clientY[1] = y ;
 
+                 //下顶点
                  clientX[2] = x + LONG;
                  clientY[2] = y + LONG;
-              */
+
+                 clientX[3] = x;
+                 clientY[3] = y + LONG;
+
              break;
 
              case UPFLAG:
-             /*
+
                  //只要找到三点的位置，在client数组中存储的顺序不是问题
-                 clientX[0] = x + LONG / 2;
+                 clientX[0] = x;
                  clientY[0] = y;
 
-                 clientX[1] = x + LONG;
-                 clientY[1] = y + LONG;
 
-                 clientX[2] = x;
+                 //右顶点
+                 clientX[1] = x + LONG;
+                 clientY[1] = y ;
+
+                 //下顶点
+                 clientX[2] = x + LONG;
                  clientY[2] = y + LONG;
-                 */
+
+                 clientX[3] = x;
+                 clientY[3] = y + LONG;
+
              break;
 
              default:
